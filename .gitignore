@@ -1,0 +1,4 @@
+.env
+node_modules/
+availability.logs
+.DS_Store

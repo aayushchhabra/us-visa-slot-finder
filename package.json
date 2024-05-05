@@ -1,0 +1,17 @@
+{
+  "name": "us-visa-slot-finder",
+  "version": "1.0.0",
+  "description": "Find early slots for US visa in Canada, maybe other countries(with some changes) that use the same portal.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Aayush Chhabra",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^16.2.0",
+    "date-fns": "^2.29.2",
+    "mailgun.js": "^8.0.0",
+    "dotenv": "^16.0.1"
+  }
+}
