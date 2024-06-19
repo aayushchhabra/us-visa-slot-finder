@@ -13,21 +13,27 @@ var filesystem = require('fs');
 let maxTries = MAX_NUMBER_OF_POLL
 
 const process = async () => {
-  log(`Starting process, tries remaining ${maxTries} ...`);
-  const browser = await puppeteer.launch({headless: true});
-  const page = await browser.newPage();
-  await login(page);
-  urls = siteInfo.APPOINTMENTS_JSON_URLS;
-  for (const url of urls) {
-    const earliestDate = await checkAvailability(page, url);
-    console.log(`Earliest date - ${earliestDate}`);
-    await logAvailability(earliestDate, url);
-    if(earliestDate && isBefore(earliestDate, parseISO(NOTIFY_ON_DATE_BEFORE))){
-      await notify(earliestDate, url);
+  try {
+    const now = new Date();
+    console.log(`\nCurrent Date and Time: ${now.toLocaleString()}`);
+    log(`Starting process, tries remaining ${maxTries} ...`);
+    const browser = await puppeteer.launch({headless: true});
+    const page = await browser.newPage();
+    await login(page);
+    urls = siteInfo.APPOINTMENTS_JSON_URLS;
+    for (const url of urls) {
+      const earliestDate = await checkAvailability(page, url);
+      console.log(`Earliest date - ${earliestDate}`);
+      await logAvailability(earliestDate, url);
+      if(earliestDate && isBefore(earliestDate, parseISO(NOTIFY_ON_DATE_BEFORE))){
+        await notify(earliestDate, url);
+      }
     }
+    await browser.close();
+    log(`Proces complete, re-running in ${NEXT_SCHEDULE_POLL/(1000*60)} mins`);
+  } catch (error) {
+    log(`Error during process: ${error.message}`);
   }
-  await browser.close();
-  log(`Proces complete, re-running in ${NEXT_SCHEDULE_POLL/(1000*60)} mins`);
 }
 
 const main = async () => {

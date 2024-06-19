@@ -22,3 +22,11 @@
 * You'll also need to add the authorized recipeints in your sandbox domain. This would be the email address that you'd like to send the email to (NOTIFY_EMAILS). Again `Sending > Domains > Sandbox`, there is form on the right which says Authorized Recipients, add the email in the form.
 
 This script has been inspired by [`US-visa-appointment-notifier`](https://github.com/theoomoregbee/US-visa-appointment-notifer/).
+
+## Pushover notification / paging setup
+* This is an optional step to set up paging (get notified with an alarm even when your phone is on silent). If you do not want to enable this, comment out line 20 from `email.js`.
+* Create a free [Pushover account](https://pushover.net/signup). Note the free account only has validity until 30 days.
+* After logging in find the user key under "Your User Key" on the landing page. This is your `PUSHOVER_USER_KEY` in `.env`.
+* At the bottom of the page beside "Your Applications", click on "Create an Application/API Token". Create an application and find the "API Token/Key". This is your `PUSHOVER_API_TOKEN` in `.env`.
+* Install Pushover app on Android or iOS. Login to the account you created. Go to Settings and enable "Play high-priority as alarm". This ensures that notification rings an alarm even when phone is silent. Set up a high-priority sound of your choice and test out everything works by setting a far out `NOTIFY_ON_DATE_BEFORE`.
+ 
